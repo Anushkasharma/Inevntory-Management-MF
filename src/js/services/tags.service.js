@@ -1,10 +1,9 @@
 export default class Tags {
-  constructor(JWT, AppConstants, $http, $q) {
+  constructor(JWT, AppConstants, $http, $q , $httpBackend) {
     'ngInject';
 
     this._AppConstants = AppConstants;
     this._$http = $http;
-
 
   }
 
@@ -17,5 +16,11 @@ export default class Tags {
 
   }
 
+  // getTags() {
+  //     // httpBackend.whenGET('rs/orderGroup/100/cloneableComponents').respond(cloneableComponents);
+  //     $httpBackend.whenGET(this._AppConstants.api + '/tags').respond('tags.json')
+  //   return this._$http.get('tags.json').then(
+  //       (res) => tags);
+  // }
 
 }

@@ -13,6 +13,7 @@ var merge         = require('merge-stream');
 // Where our files are located
 var jsFiles   = "src/js/**/*.js";
 var viewFiles = "src/js/**/*.html";
+var jsonFiles = "src/js/**/*.json";
 
 var interceptErrors = function(error) {
   var args = Array.prototype.slice.call(arguments);
@@ -46,6 +47,12 @@ gulp.task('html', function() {
       .pipe(gulp.dest('./build/'));
 });
 
+gulp.task('json', function() {
+    return gulp.src(jsonFiles)
+        .on('error', interceptErrors)
+        .pipe(gulp.dest('./build/'));
+});
+
 gulp.task('views', function() {
   return gulp.src(viewFiles)
       .pipe(templateCache({
@@ -58,7 +65,7 @@ gulp.task('views', function() {
 
 // This task is used for building production ready
 // minified JS/CSS files into the dist/ folder
-gulp.task('build', ['html', 'browserify'], function() {
+gulp.task('build', ['html', 'browserify' , 'json'], function() {
   var html = gulp.src("build/index.html")
                  .pipe(gulp.dest('./dist/'));
 
@@ -66,7 +73,10 @@ gulp.task('build', ['html', 'browserify'], function() {
                .pipe(uglify())
                .pipe(gulp.dest('./dist/'));
 
-  return merge(html,js);
+  var json = gulp.src("./src/js/mockdata/tags.json")
+              .pipe(gulp.dest('./dist/mockdata/'));
+
+  return merge(html,js,json);
 });
 
 gulp.task('default', ['html', 'browserify'], function() {

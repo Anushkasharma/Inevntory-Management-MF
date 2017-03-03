@@ -14,6 +14,7 @@ var merge         = require('merge-stream');
 var jsFiles   = "src/js/**/*.js";
 var viewFiles = "src/js/**/*.html";
 var jsonFiles = "src/js/**/*.json";
+var cssFiles = "src/js/**/*.css";
 
 var interceptErrors = function(error) {
   var args = Array.prototype.slice.call(arguments);
@@ -53,6 +54,12 @@ gulp.task('json', function() {
         .pipe(gulp.dest('./build/'));
 });
 
+gulp.task('css', function() {
+    return gulp.src(cssFiles)
+        .on('error', interceptErrors)
+        .pipe(gulp.dest('./build/'));
+});
+
 gulp.task('views', function() {
   return gulp.src(viewFiles)
       .pipe(templateCache({
@@ -65,7 +72,7 @@ gulp.task('views', function() {
 
 // This task is used for building production ready
 // minified JS/CSS files into the dist/ folder
-gulp.task('build', ['html', 'browserify' , 'json'], function() {
+gulp.task('build', ['html', 'browserify' , 'json' , 'css'], function() {
   var html = gulp.src("build/index.html")
                  .pipe(gulp.dest('./dist/'));
 
@@ -76,10 +83,13 @@ gulp.task('build', ['html', 'browserify' , 'json'], function() {
   var json = gulp.src("./src/js/mockdata/tags.json")
               .pipe(gulp.dest('./dist/mockdata/'));
 
-  return merge(html,js,json);
+  var css = gulp.src("./src/js/css/*.css")
+              .pipe(gulp.dest('./dist/css/'));
+
+  return merge(html,js,json,css);
 });
 
-gulp.task('default', ['html', 'browserify'], function() {
+gulp.task('default', ['html', 'browserify' , 'json' , 'css'], function() {
 
   browserSync.init(['./build/**/**.**'], {
     server: "./build",
@@ -93,4 +103,7 @@ gulp.task('default', ['html', 'browserify'], function() {
   gulp.watch("src/index.html", ['html']);
   gulp.watch(viewFiles, ['views']);
   gulp.watch(jsFiles, ['browserify']);
+  gulp.watch(jsonFiles , ['json']);
+  gulp.watch(jsonFiles , ['css']);
+
 });

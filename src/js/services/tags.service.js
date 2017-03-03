@@ -6,21 +6,8 @@ export default class Tags {
     this._$http = $http;
 
   }
-
+//Since singleton class can only create 1 instance of this class.
   getAll() {
-
-    return this._$http({
-      url: this._AppConstants.api + '/tags',
-      method: 'GET',
-    }).then((res) => res.data.tags);
-
+      return this._$http.get('./mockdata/tags.json');
   }
-
-  // getTags() {
-  //     // httpBackend.whenGET('rs/orderGroup/100/cloneableComponents').respond(cloneableComponents);
-  //     $httpBackend.whenGET(this._AppConstants.api + '/tags').respond('tags.json')
-  //   return this._$http.get('tags.json').then(
-  //       (res) => tags);
-  // }
-
 }

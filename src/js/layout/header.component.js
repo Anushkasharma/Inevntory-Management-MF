@@ -9,6 +9,13 @@ class AppHeaderCtrl {
       this.currentUser = newUser;
     })
   }
+
+
+
+    addForm() {
+
+}
+
 }
 
 let AppHeader = {

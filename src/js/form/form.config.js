@@ -8,11 +8,6 @@ function FormConfig($stateProvider) {
             controllerAs: '$formcntrl',
             templateUrl: 'form/form.html',
             title: 'Form'
-            // resolve: {
-            //     auth: function(User) {
-            //         return User.ensureAuthIs(true);
-            //     }
-           // }
 
         });
 };

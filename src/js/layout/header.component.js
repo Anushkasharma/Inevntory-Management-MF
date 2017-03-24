@@ -9,13 +9,9 @@ class AppHeaderCtrl {
       this.currentUser = newUser;
     })
   }
-
-
-
-    addForm() {
-
-}
-
+    addForm(){
+        window.location.reload(true);
+    };
 }
 
 let AppHeader = {

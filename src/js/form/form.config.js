@@ -4,11 +4,11 @@ function FormConfig($stateProvider) {
     $stateProvider
         .state('app.form' , {
             url: '/form',
-            controller: 'FormCntrl',
-            controllerAs: '$formcntrl',
+            controller: 'FormCtrl',
+            controllerAs: '$ctrl',
             templateUrl: 'form/form.html',
             title: 'Form'
-
+            // $inject: 'ngMaterial'
         });
 };
 

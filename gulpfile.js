@@ -9,6 +9,7 @@ var rename        = require('gulp-rename');
 var templateCache = require('gulp-angular-templatecache');
 var uglify        = require('gulp-uglify');
 var merge         = require('merge-stream');
+// var ngMaterial    = require('angular-material');
 
 // Where our files are located
 var jsFiles   = "src/js/**/*.js";
@@ -29,11 +30,11 @@ var interceptErrors = function(error) {
   this.emit('end');
 };
 
-
 gulp.task('browserify', ['views'], function() {
   return browserify('./src/js/app.js')
       .transform(babelify, {presets: ["es2015"]})
       .transform(ngAnnotate)
+      // .transform(ngMaterial)
       .bundle()
       .on('error', interceptErrors)
       //Pass desired output filename to vinyl-source-stream
@@ -41,6 +42,11 @@ gulp.task('browserify', ['views'], function() {
       // Start piping stream to tasks!
       .pipe(gulp.dest('./build/'));
 });
+
+// gulp.task('scripts', function() {
+//   return gulp.src(paths)
+//       .pipe(gulp.dest('./build/'));
+// });
 
 gulp.task('html', function() {
   return gulp.src("src/index.html")
@@ -104,6 +110,6 @@ gulp.task('default', ['html', 'browserify' , 'json' , 'css'], function() {
   gulp.watch(viewFiles, ['views']);
   gulp.watch(jsFiles, ['browserify']);
   gulp.watch(jsonFiles , ['json']);
-  gulp.watch(jsonFiles , ['css']);
+  gulp.watch(cssFiles , ['css']);
 
 });
